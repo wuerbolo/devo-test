@@ -1,5 +1,4 @@
 from argparse import ArgumentParser
-import math
 
 def init_args():
 
@@ -29,14 +28,6 @@ def get_divisors(n):
             divisor_sum += x
     return divisors, divisor_sum
 
-def get_divisor(n):
-    yield 1
-    until = math.isqrt(n) + 1 # isqrt is the floor square root
-    for x in range(2, until):
-        if (n % x == 0): # divisor
-            yield x
-            yield n//x
-
 # 12 = 1 + 2 + 3 + 4 + 6 ==> abundante
 # 6 = 1 + 2 + 3 ==> perfecto
 # 4 = 1 + 2 ==> defectivo
@@ -46,15 +37,9 @@ def get_number_type(n, _divisors):
 def classify():
     number_list = range(n)
     for num in number_list:
-        # divisors, divisor_sum = get_divisors(num)
-        divisor_sum = 0
-        str_divisors = ''
-        # import pdb; pdb.set_trace()
-        for divisor in get_divisor(num):
-            divisor_sum += divisor
-            str_divisors += ' + {}'.format(str(divisor))
+        divisors, divisor_sum = get_divisors(num)
         print('****** %s ******' % num)
-        print('Divisors: {}'.format(str_divisors))
+        print('Divisors: {}'.format(' + '.join(str(x) for x in divisors)))
         if divisor_sum == num:
             print('%s is a perfect number' % num)
         elif divisor_sum > num:
